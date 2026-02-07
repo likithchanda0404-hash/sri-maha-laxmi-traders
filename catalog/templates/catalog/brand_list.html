@@ -1,0 +1,30 @@
+{% extends "core/base.html" %}
+{% block title %}Brands • Sri Maha Laxmi Traders{% endblock %}
+{% block content %}
+
+<div class="section-title">
+  <div>
+    <h2>Brands</h2>
+    <p>Company-wise sections (Doms, Cello, Flair…)</p>
+  </div>
+</div>
+
+<div class="grid">
+  {% for b in brands %}
+    <a class="card item" href="/brand/{{ b.id }}/">
+      <h3>{{ b.name }}</h3>
+      {% if b.name_te %}
+        <p class="muted">{{ b.name_te }}</p>
+      {% else %}
+        <p class="muted">View products →</p>
+      {% endif %}
+    </a>
+  {% empty %}
+    <div class="card item">
+      <h3>No brands added</h3>
+      <p class="muted">Add brands in admin panel.</p>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

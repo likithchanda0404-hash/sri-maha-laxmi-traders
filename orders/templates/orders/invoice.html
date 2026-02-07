@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice | Order #{{ order.id }}</title>
+  <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+  <style>
+    .wrap{min-height:100vh; padding:40px 0;}
+    .panel{background:#fff; border-radius:14px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.10); max-width:900px; margin:auto;}
+    table{width:100%; border-collapse:collapse; margin-top:14px;}
+    th,td{padding:12px; border-bottom:1px solid rgba(0,0,0,.08); text-align:left;}
+    th{background:#f7f7f7;}
+    .top{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+    .btnrow{margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;}
+    .btn{
+      display:inline-block;
+      padding:12px 18px;
+      background:#75010d;
+      color:#fff;
+      border-radius:10px;
+      font-weight:900;
+      text-decoration:none;
+    }
+    .btn.secondary{background:#aa0619;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="container">
+      <div class="panel">
+
+        <div class="top">
+          <div>
+            <h2>Sri Maha Laxmi Traders</h2>
+            <div class="muted">6-8-151, Namdevada, Nizamabad 503002, Telangana</div>
+            <div class="muted">Phone: +91 9440574394, +91 7386034104</div>
+          </div>
+          <div style="text-align:right;">
+            <h3>Invoice</h3>
+            <div><b>Order #:</b> {{ order.id }}</div>
+            <div><b>Status:</b> {{ order.status }}</div>
+          </div>
+        </div>
+
+        <hr>
+
+        <p><b>Customer:</b> {{ order.user.username }}</p>
+        <p><b>Phone:</b> {{ order.phone }} | <b>WhatsApp:</b> {{ order.whatsapp }}</p>
+        <p><b>Fulfillment:</b> {{ order.get_fulfillment_display }}</p>
+        {% if order.address %}<p><b>Address:</b> {{ order.address }}</p>{% endif %}
+
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Qty</th>
+              <th>Price (₹)</th>
+              <th>Subtotal (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for it in items %}
+            <tr>
+              <td>{{ it.name }}</td>
+              <td>{{ it.qty }}</td>
+              <td>{{ it.price }}</td>
+              <td>{{ it.subtotal }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div style="display:flex; justify-content:flex-end; margin-top:14px; font-size:16px;">
+          <b>Total: ₹ {{ total }}</b>
+        </div>
+
+        <div class="btnrow">
+          <a class="btn" href="{% url 'invoice_pdf' order.id %}">Download PDF</a>
+          <a class="btn secondary" href="{% url 'order_success' order.id %}">Back</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,520 @@
+/* =========================================================
+   Sri Maha Laxmi Traders - Full Styles (Flipkart-like UI)
+   Keeps your colors, upgrades font + spacing + cards + grid
+========================================================= */
+
+/* Modern font (whole website) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ---------- Theme variables (YOUR COLORS) ---------- */
+:root{
+  --bg: #f3b2ad;          /* page background */
+  --c1: #75010d;          /* primary text / headings */
+  --c2: #aa0619;          /* secondary */
+  --c3: #df0b26;          /* highlight */
+  --white: #ffffff;
+  --ink: #111111;
+  --muted: rgba(0,0,0,0.62);
+
+  --border: rgba(0,0,0,0.10);
+  --shadow1: 0 10px 26px rgba(0,0,0,0.10);
+  --shadow2: 0 14px 38px rgba(0,0,0,0.14);
+
+  --radius: 14px;
+  --radius2: 10px;
+}
+
+/* ---------- Global reset ---------- */
+*{ box-sizing: border-box; }
+html, body{ height: 100%; }
+body{
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img{ max-width: 100%; display: block; }
+a{ color: inherit; }
+
+/* ---------- Container ---------- */
+.container{
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+/* ---------- Header / Navbar (clean + sticky) ---------- */
+header, .header, .site-header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
+
+.navbar, nav, .nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 10px 0;
+}
+
+.brand{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 260px;
+}
+
+.brand img, .logo{
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.brand-title, .brand h1, .brand .title{
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--c1);
+  margin: 0;
+}
+
+.brand-subtitle, .brand small, .brand .subtitle{
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c2);
+  margin-top: 2px;
+}
+
+.nav-links, nav ul, .nav ul{
+  list-style: none;
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.nav-links a, nav a{
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--c1);
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+
+.nav-links a:hover, nav a:hover{
+  background: rgba(170, 6, 25, 0.08);
+}
+
+/* Language toggle (if you have one) */
+.lang-toggle, .lang{
+  border: 1px solid rgba(170, 6, 25, 0.25);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--c1);
+  background: rgba(255,255,255,0.8);
+}
+
+/* ---------- Page spacing ---------- */
+.page, main, .wrap{
+  padding: 18px 0 28px;
+}
+
+/* ---------- Search bar (Flipkart feel) ---------- */
+.searchbar, .search-bar, .search{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 18px;
+}
+
+.searchbar input,
+.search-bar input,
+.search input,
+input[type="search"]{
+  height: 44px;
+  width: min(760px, 100%);
+  border-radius: 12px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.92);
+  outline: none;
+  font-weight: 600;
+}
+
+.searchbar input:focus,
+.search-bar input:focus,
+.search input:focus,
+input[type="search"]:focus{
+  border-color: rgba(117, 1, 13, 0.30);
+  box-shadow: 0 0 0 4px rgba(117, 1, 13, 0.08);
+}
+
+.searchbar button,
+.search-bar button,
+.search button{
+  height: 44px;
+  border: none;
+  padding: 0 18px;
+  border-radius: 12px;
+  background: var(--c1);
+  color: var(--white);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.10);
+}
+
+.searchbar button:hover,
+.search-bar button:hover,
+.search button:hover{
+  filter: brightness(0.98);
+  transform: translateY(-1px);
+}
+
+/* ---------- Flipkart-like layout (optional sidebar + grid) ---------- */
+.layout, .catalog-layout, .products-layout, .page-layout{
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+/* If you don't have a sidebar in HTML, it becomes 1 column safely */
+.layout:not(:has(.sidebar)):not(:has(aside)),
+.catalog-layout:not(:has(.sidebar)):not(:has(aside)),
+.products-layout:not(:has(.sidebar)):not(:has(aside)),
+.page-layout:not(:has(.sidebar)):not(:has(aside)){
+  grid-template-columns: 1fr;
+}
+
+/* Sidebar styling (if present) */
+.sidebar, aside{
+  background: rgba(255,255,255,0.92);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow1);
+  position: sticky;
+  top: 86px;
+}
+.sidebar h3, aside h3,
+.sidebar h4, aside h4{
+  margin: 10px 0;
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--c1);
+}
+.sidebar a, aside a,
+.sidebar label, aside label{
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--c2);
+}
+
+/* ---------- Product grid (Flipkart-style) ---------- */
+.products, .product-grid, .grid, .cards, .product-list{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+/* Responsive grid */
+@media (max-width: 1100px){
+  .products, .product-grid, .grid, .cards, .product-list{ grid-template-columns: repeat(3, 1fr); }
+  .layout, .catalog-layout, .products-layout, .page-layout{ grid-template-columns: 260px 1fr; }
+}
+@media (max-width: 900px){
+  .products, .product-grid, .grid, .cards, .product-list{ grid-template-columns: repeat(2, 1fr); }
+  .layout, .catalog-layout, .products-layout, .page-layout{ grid-template-columns: 1fr; }
+  .sidebar, aside{ position: relative; top: 0; }
+}
+@media (max-width: 560px){
+  .products, .product-grid, .grid, .cards, .product-list{ grid-template-columns: 1fr; }
+  .brand{ min-width: auto; }
+}
+
+/* ---------- Cards (Flipkart feel, your colors) ---------- */
+.card, .product-card, .product-item, .item-card{
+  background: rgba(255,255,255,0.95);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow1);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.card:hover, .product-card:hover, .product-item:hover, .item-card:hover{
+  transform: translateY(-3px);
+  box-shadow: var(--shadow2);
+  border-color: rgba(0,0,0,0.12);
+}
+
+/* Card image area */
+.card img,
+.product-card img,
+.product-item img,
+.item-card img{
+  width: 100%;
+  height: 210px;
+  object-fit: contain;
+  background: rgba(255,255,255,0.96);
+}
+
+/* Card content spacing */
+.card .content, .card-body,
+.product-card .content, .product-card .body,
+.product-item .content, .product-item .body,
+.item-card .content, .item-card .body{
+  padding: 12px 14px 14px;
+}
+
+/* Titles */
+.card h2, .card h3,
+.product-name{
+  margin: 8px 0 8px;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.25;
+  color: var(--c1);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Brand/category line */
+.meta, .brandline, .categoryline, .subtext{
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--c2);
+  opacity: 0.95;
+}
+
+/* Price */
+.price, .product-price{
+  font-size: 15px;
+  font-weight: 950;
+  color: var(--c3);
+  margin-top: 8px;
+}
+
+/* Stock pill/badge */
+.badge, .pill, .stock-badge, .stock{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: rgba(255,255,255,0.86);
+  color: var(--c2);
+}
+
+/* ---------- Buttons ---------- */
+button, .btn, a.btn{
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  background: var(--c1);
+  color: var(--white);
+  transition: transform .15s ease, filter .15s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:hover, .btn:hover, a.btn:hover{
+  filter: brightness(0.98);
+  transform: translateY(-1px);
+}
+
+.btn.secondary, a.btn.secondary{
+  background: var(--c2);
+}
+
+.btn.outline, a.btn.outline{
+  background: transparent;
+  color: var(--c1);
+  border: 1px solid rgba(117,1,13,0.35);
+}
+
+/* ---------- Forms ---------- */
+input, select, textarea{
+  font-family: inherit;
+  font-size: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 12px 12px;
+  outline: none;
+  background: rgba(255,255,255,0.92);
+}
+textarea{ resize: vertical; }
+input:focus, select:focus, textarea:focus{
+  border-color: rgba(117, 1, 13, 0.35);
+  box-shadow: 0 0 0 4px rgba(117, 1, 13, 0.08);
+}
+
+/* Fix checkbox stretching issue globally */
+input[type="checkbox"]{
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+}
+
+/* ---------- Tables (cart/checkout) ---------- */
+table{
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td{
+  padding: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  text-align: left;
+}
+th{
+  background: rgba(255,255,255,0.70);
+  color: var(--c1);
+  font-weight: 900;
+}
+
+/* ---------- Auth pages (login/signup) ---------- */
+.login-wrapper, .signup-wrapper{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.login-card, .signup-card{
+  background: rgba(255,255,255,0.96);
+  width: min(520px, calc(100% - 32px));
+  padding: 36px;
+  border-radius: 16px;
+  box-shadow: var(--shadow2);
+  text-align: center;
+}
+
+.login-logo, .signup-logo{
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin: 0 auto 18px;
+}
+
+.login-card h2, .signup-card h2{
+  margin: 8px 0 18px;
+  color: var(--c1);
+  font-weight: 950;
+}
+
+/* show-password alignment */
+.show-password{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--c1);
+  margin: 6px 0 18px;
+}
+.show-password label{ font-weight: 800; }
+
+/* ---------- Footer ---------- */
+footer, .footer{
+  background: var(--c1);
+  color: var(--white);
+  margin-top: 28px;
+  padding: 26px 0;
+}
+.footer .container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+}
+.footer h3, .footer h4{
+  margin: 0 0 10px;
+  font-weight: 950;
+}
+.footer p, .footer a{
+  margin: 6px 0;
+  font-weight: 700;
+  color: rgba(255,255,255,0.92);
+  text-decoration: none;
+}
+.footer a:hover{ text-decoration: underline; }
+
+@media (max-width: 900px){
+  .footer .container{ grid-template-columns: 1fr; }
+}
+
+/* ---------- Small helpers ---------- */
+.muted{ color: var(--muted); font-weight: 600; }
+.center{ text-align: center; }
+
+/* ================================
+   Footer boxes layout fix
+================================ */
+
+/* Footer container as grid */
+.footer .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Each footer info box */
+.footer .container > div {
+  background: #ffffff;
+  padding: 18px 20px;
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+}
+
+/* Text color inside footer boxes */
+.footer .container > div,
+.footer .container > div p,
+.footer .container > div span,
+.footer .container > div a {
+  color: #75010d;   /* deep maroon – readable & brand-safe */
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+/* Footer headings inside boxes */
+.footer .container > div h3,
+.footer .container > div h4 {
+  color: #aa0619;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+/* WhatsApp / email links */
+.footer .container > div a:hover {
+  text-decoration: underline;
+  color: #df0b26;
+}
+
+/* Responsive: stack on mobile */
+@media (max-width: 768px) {
+  .footer .container {
+    grid-template-columns: 1fr;
+  }
+}
+

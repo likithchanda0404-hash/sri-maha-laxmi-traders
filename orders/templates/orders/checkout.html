@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout | Sri Maha Laxmi Traders</title>
+  <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+  <style>
+    .wrap{min-height:100vh; padding:40px 0;}
+    .panel{background:#fff; border-radius:12px; padding:22px; box-shadow:0 10px 30px rgba(0,0,0,.10); max-width:900px; margin:auto;}
+    .panel input, .panel textarea, .panel select{width:100%; margin-bottom:12px;}
+    table{width:100%; border-collapse:collapse; margin:14px 0;}
+    th, td{padding:10px; border-bottom:1px solid rgba(0,0,0,.08); text-align:left;}
+    th{background:#f7f7f7;}
+    .totalbox{display:flex; justify-content:flex-end; margin-top:10px; font-size:16px;}
+    .hint{font-size:13px; color:#aa0619; margin-top:-6px; margin-bottom:14px;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="container">
+      <div class="panel">
+        <h2>Checkout</h2>
+
+        <h3>Order Summary</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price (₹)</th>
+              <th>Qty</th>
+              <th>Subtotal (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+            <tr>
+              <td>{{ item.product.name }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.qty }}</td>
+              <td>{{ item.subtotal }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="totalbox">
+          <b>Total: ₹ {{ total }}</b>
+        </div>
+
+        <hr style="margin:18px 0; border:none; border-top:1px solid rgba(0,0,0,.12);">
+
+        <form method="post">
+          {% csrf_token %}
+
+          <label>Pickup / Delivery</label>
+          <select name="fulfillment" required>
+            <option value="pickup">Pickup</option>
+            <option value="delivery">Delivery</option>
+            <option value="both">Pickup or Delivery</option>
+          </select>
+
+          <label>Phone</label>
+          <input type="text" name="phone" placeholder="Phone number" value="{{ profile.phone }}" required>
+
+          <label>WhatsApp Number</label>
+          <input type="text" name="whatsapp" placeholder="WhatsApp number" value="{{ profile.phone }}" required>
+
+          <label>Delivery Address (if delivery)</label>
+          <textarea name="address" rows="4" placeholder="Enter delivery address (we will confirm manually)">{{ profile.address }}</textarea>
+          <div class="hint">Delivery address will be manually confirmed by the shop. No delivery charges.</div>
+
+          <label>Notes (optional)</label>
+          <textarea name="notes" rows="3" placeholder="Any notes (example: call before delivery)"></textarea>
+
+          <button type="submit">Place Order</button>
+        </form>
+
+        <div style="margin-top:14px;">
+          <a href="/cart/">← Back to Cart</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

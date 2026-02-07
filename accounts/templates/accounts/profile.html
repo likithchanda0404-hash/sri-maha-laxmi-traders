@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile | Sri Maha Laxmi Traders</title>
+  <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+  <style>
+    .wrap{min-height:100vh; display:flex; align-items:center; justify-content:center;}
+    .card{background:#fff; padding:32px; border-radius:12px; width:100%; max-width:520px; box-shadow:0 10px 30px rgba(0,0,0,.12);}
+    .card h2{text-align:center; margin-bottom:18px;}
+    .card input, .card textarea{width:100%; margin-bottom:12px;}
+    .card button{width:100%;}
+    .toplinks{display:flex; justify-content:space-between; margin-bottom:14px; font-size:14px;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="toplinks">
+        <a href="/">← Back to Home</a>
+        <a href="/accounts/logout/">Logout</a>
+      </div>
+
+      <h2>My Profile</h2>
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="text" name="phone" placeholder="Phone number" value="{{ profile.phone }}">
+        <textarea name="address" rows="4" placeholder="Address (for delivery)">{{ profile.address }}</textarea>
+        <button type="submit">Save</button>
+      </form>
+
+      <p class="muted" style="margin-top:12px;">
+        Delivery address will be manually confirmed by the shop.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

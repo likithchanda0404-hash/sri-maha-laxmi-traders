@@ -1,0 +1,51 @@
+{% extends "core/base.html" %}
+{% block title %}Products • Sri Maha Laxmi Traders{% endblock %}
+{% block content %}
+
+<div class="section-title">
+  <div>
+    <h2>All Products</h2>
+    <p>Search items and open details</p>
+  </div>
+</div>
+
+<form class="searchbar" method="get">
+  <input type="text" name="q" value="{{ q }}" placeholder="Search… (example: cello, doms, notebook, blue pen)" />
+  <button type="submit">Search</button>
+  {% if q %}
+    <a class="pill" href="/products/">Clear</a>
+  {% endif %}
+</form>
+
+<div style="height:12px;"></div>
+
+<div class="grid">
+  {% for p in products %}
+    <a class="card item" href="/product/{{ p.id }}/">
+      <div class="imgbox">
+        {% if p.image %}
+          <img src="{{ p.image.url }}" alt="{{ p.name }}">
+        {% endif %}
+      </div>
+
+      <h3>{{ p.name }}</h3>
+      <div class="muted">{{ p.brand.name }} • {{ p.category.name }}</div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+        <div class="price">₹{{ p.price }}</div>
+        {% if p.stock_quantity <= 5 %}
+          <span class="stock"><span class="dot low"></span>Low: {{ p.stock_quantity }}</span>
+        {% else %}
+          <span class="stock"><span class="dot"></span>In stock: {{ p.stock_quantity }}</span>
+        {% endif %}
+      </div>
+    </a>
+  {% empty %}
+    <div class="card item">
+      <h3>No products found</h3>
+      <p class="muted">Try a different keyword.</p>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

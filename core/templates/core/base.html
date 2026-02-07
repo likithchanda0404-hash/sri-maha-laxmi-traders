@@ -1,0 +1,67 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Sri Maha Laxmi Traders{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <div class="brand">
+  <img src="{% static 'core/logo_new.png' %}" alt="Sri Maha Laxmi Traders Logo" class="logo-img">
+  <div>
+    <h1>Sri Maha Laxmi Traders</h1>
+    <small>Books & Stationery • Namdevada, Telangana 503002</small>
+  </div>
+</div>
+
+
+    <nav class="links">
+      <a href="/">Home</a>
+      <a href="/brands/">Brands</a>
+      <a href="/products/">Products</a>
+      <a href="/contact/">Contact</a>
+      <span class="lang">EN | తెలుగు</span>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="card kv">
+        <b>Shop</b>
+        <div>
+          Sri Maha Laxmi Traders<br>
+          6-8-151, Namdevada, Nizamabad 503002, Telangana
+        </div>
+        <b>Order</b>
+        <div>Pickup / Delivery (manual confirmation)</div>
+      </div>
+
+      <div class="card kv">
+        <b>Phone</b>
+        <div>+91 9440574394, +91 7386034104</div>
+        <b>Email</b>
+        <div>santhoshchanda4@gmail.com, likith.chanda0404@gmail.com</div>
+        <b>WhatsApp</b>
+        <div>Orders notify to +91 7386034104</div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;">
+      © {% now "Y" %} Sri Maha Laxmi Traders. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

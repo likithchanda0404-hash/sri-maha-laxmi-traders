@@ -1,0 +1,70 @@
+{% extends "core/base.html" %}
+{% block title %}Home • Sri Maha Laxmi Traders{% endblock %}
+{% block content %}
+
+<section class="hero">
+  <div class="hero-card card">
+    <div>
+      <h2 style="margin:0 0 8px; font-size:22px;">Everything for School, College & Office</h2>
+      <p style="margin:0; color:var(--muted);">
+       Browse products brand-wise (Doms, Cello, Flair…) and place your order online.
+
+      </p>
+
+      <div class="badges">
+        <span class="badge">✅ Customer Accounts</span>
+        <span class="badge">📦 Inventory Managed by Owner</span>
+        <span class="badge">🛵 Delivery / 🏪 Pickup</span>
+        <span class="badge">📲 WhatsApp Order Alerts</span>
+        <span class="badge">EN + తెలుగు</span>
+      </div>
+
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="pill" href="/brands/">Browse by Brand →</a>
+        <a class="pill" href="/products/">Browse All Products →</a>
+      </div>
+    </div>
+
+    <div class="card" style="padding:14px;">
+      <h3 style="margin:0 0 10px; font-size:16px;">How ordering works</h3>
+      <ol style="margin:0; padding-left:18px; color:var(--muted);">
+        <li>Choose products</li>
+        <li>Add to cart (next step)</li>
+        <li>Select Pickup / Delivery</li>
+        <li>We confirm via call/WhatsApp</li>
+      </ol>
+      <div style="margin-top:12px;">
+        <span class="badge">Delivery: any address (manual confirm)</span>
+        <span class="badge">No delivery charges</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-title">
+  <div>
+    <h2>Start browsing</h2>
+    <p>Use brands for company-wise products</p>
+  </div>
+</div>
+
+<div class="grid">
+  <a class="card item" href="/brands/">
+    <h3>Brands</h3>
+    <p class="muted">Doms, Cello, Flair & more</p>
+  </a>
+  <a class="card item" href="/products/">
+    <h3>Products</h3>
+    <p class="muted">Search and view all items</p>
+  </a>
+  <a class="card item" href="/contact/">
+    <h3>Contact</h3>
+    <p class="muted">Address, phone & email</p>
+  </a>
+  <div class="card item">
+    <h3>Accounts (next)</h3>
+    <p class="muted">Signup/login for customers</p>
+  </div>
+</div>
+
+{% endblock %}

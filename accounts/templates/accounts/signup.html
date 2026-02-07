@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Signup | Sri Maha Laxmi Traders</title>
+  <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+
+  <style>
+    .signup-wrapper{
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .signup-card{
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.15);
+      text-align: center;
+    }
+
+    .signup-logo{
+      width: 130px;
+      height: 130px;
+      object-fit: contain;
+      margin-bottom: 20px;
+    }
+
+    .signup-card input[type="text"],
+    .signup-card input[type="password"]{
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
+    /* ✅ FIXED SHOW PASSWORD ALIGNMENT */
+    .show-password{
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      font-size: 14px;
+      color: #75010d;
+      margin: 6px 0 18px;
+    }
+
+    .show-password input[type="checkbox"]{
+      width: auto;     /* 🔥 THIS FIXES THE ISSUE */
+      margin: 0;
+    }
+
+    .signup-card button{
+      width: 100%;
+    }
+
+    .signup-card p{
+      margin-top: 16px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="signup-wrapper">
+  <div class="signup-card">
+
+    <!-- BIG LOGO -->
+    <img src="{% static 'core/logo_new.png' %}" alt="Sri Maha Laxmi Traders" class="signup-logo">
+
+    <h2>Create Account</h2>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <input type="text" name="username" placeholder="Username" required>
+
+      <input type="password" id="signupPassword" name="password" placeholder="Password" required>
+
+      <input type="password" id="signupPassword2" name="password2" placeholder="Confirm Password" required>
+
+      <!-- SHOW PASSWORD (FIXED) -->
+      <div class="show-password">
+        <input type="checkbox" id="showSignupPwd" onclick="toggleSignupPassword()">
+        <label for="showSignupPwd">Show Password</label>
+      </div>
+
+      <button type="submit">Create Account</button>
+    </form>
+
+    <p>
+      Already have an account?
+      <a href="{% url 'login' %}">Login</a>
+    </p>
+
+  </div>
+</div>
+
+<script>
+function toggleSignupPassword(){
+  const p1 = document.getElementById("signupPassword");
+  const p2 = document.getElementById("signupPassword2");
+  const type = p1.type === "password" ? "text" : "password";
+  p1.type = type;
+  p2.type = type;
+}
+</script>
+
+</body>
+</html>

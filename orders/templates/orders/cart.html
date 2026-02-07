@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Cart | Sri Maha Laxmi Traders</title>
+  <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+
+  <style>
+    .wrap{min-height:100vh; padding:40px 0;}
+    .panel{background:#fff; border-radius:12px; padding:22px; box-shadow:0 10px 30px rgba(0,0,0,.10); max-width:950px; margin:auto;}
+    table{width:100%; border-collapse:collapse; margin-top:16px;}
+    th, td{padding:12px; border-bottom:1px solid rgba(0,0,0,.08); text-align:left;}
+    th{background:#f7f7f7;}
+    .qtyform{display:flex; gap:10px; align-items:center;}
+    .qtyform input{width:80px; margin:0;}
+    .actions a{margin-right:10px; color:#75010d; font-size:14px; text-decoration:none;}
+    .totalbox{margin-top:18px; display:flex; justify-content:flex-end; font-size:16px;}
+    .bottom-links{margin-top:18px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+    .bottom-links a{font-weight:700; color:#75010d; text-decoration:none;}
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+  <div class="container">
+    <div class="panel">
+      <h2>My Cart</h2>
+
+      {% if items %}
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price (₹)</th>
+              <th>Qty</th>
+              <th>Subtotal (₹)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for item in items %}
+            <tr>
+              <td>{{ item.product.name }}</td>
+              <td>{{ item.price }}</td>
+
+              <td>
+                <form method="post" action="{% url 'cart_update' item.product.id %}" class="qtyform">
+                  {% csrf_token %}
+                  <input type="number" name="qty" min="0" value="{{ item.qty }}" required>
+                  <button type="submit">Update</button>
+                </form>
+              </td>
+
+              <td>{{ item.subtotal }}</td>
+
+              <td class="actions">
+                <a href="{% url 'cart_add' item.product.id %}">+ Add 1</a>
+                <a href="{% url 'cart_remove' item.product.id %}">Remove</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="totalbox">
+          <b>Total: ₹ {{ total }}</b>
+        </div>
+
+        <div class="bottom-links">
+          <a href="/products/">← Continue Shopping</a>
+          <a href="/checkout/">Proceed to Checkout →</a>
+        </div>
+
+      {% else %}
+        <p>Your cart is empty.</p>
+        <a href="/products/">← Browse Products</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Order Success | Sri Maha Laxmi Traders</title>
+  <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+  <style>
+    .wrap{min-height:100vh; padding:40px 0;}
+    .panel{background:#fff; border-radius:14px; padding:26px; box-shadow:0 10px 30px rgba(0,0,0,.12); max-width:760px; margin:auto; text-align:center;}
+    .panel h2{color:#75010d;}
+    .items{text-align:left; margin:16px 0;}
+    .items li{margin:6px 0;}
+    .btnrow{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:14px;}
+    .whatsapp-btn{
+      display:inline-block;
+      padding:12px 18px;
+      background:#25D366;
+      color:#fff;
+      border-radius:10px;
+      font-weight:900;
+      text-decoration:none;
+    }
+    .whatsapp-btn:hover{filter:brightness(0.95);}
+    .btn{
+      display:inline-block;
+      padding:12px 18px;
+      background:#75010d;
+      color:#fff;
+      border-radius:10px;
+      font-weight:900;
+      text-decoration:none;
+    }
+    .btn.secondary{background:#aa0619;}
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="container">
+    <div class="panel">
+      <h2>Order placed successfully ✅</h2>
+
+      <p><b>Order ID:</b> {{ order.id }}</p>
+      <p><b>Pickup / Delivery:</b> {{ order.get_fulfillment_display }}</p>
+
+      <div class="items">
+        <h3>Items</h3>
+        <ul>
+          {% for item in order.items.all %}
+            <li>{{ item.product.name }} × {{ item.qty }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="btnrow">
+        <a class="whatsapp-btn" href="{{ whatsapp_url }}" target="_blank">Send Order on WhatsApp</a>
+        <a class="btn secondary" href="{% url 'invoice_view' order.id %}">View Invoice</a>
+        <a class="btn" href="{% url 'invoice_pdf' order.id %}">Download PDF</a>
+      </div>
+
+      <p class="muted" style="margin-top:14px;">
+        We will confirm your order on WhatsApp/phone.
+      </p>
+
+      <div style="margin-top:18px;">
+        <a href="/">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
