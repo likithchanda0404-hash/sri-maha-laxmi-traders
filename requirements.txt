@@ -5,3 +5,5 @@ pillow==12.1.0
 reportlab==4.4.9
 sqlparse==0.5.5
 tzdata==2025.3
+whitenoise
+gunicorn
