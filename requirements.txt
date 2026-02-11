@@ -1,9 +1,3 @@
-asgiref==3.11.1
-charset-normalizer==3.4.4
-Django==6.0.2
-pillow==12.1.0
-reportlab==4.4.9
-sqlparse==0.5.5
-tzdata==2025.3
-whitenoise
-gunicorn
+gunicorn==25.0.3
+packaging==26.0
+whitenoise==6.11.0
