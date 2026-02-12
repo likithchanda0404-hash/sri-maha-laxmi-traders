@@ -1,16 +1,17 @@
 {% extends "core/base.html" %}
+{% load static %}
 {% block title %}Products • Sri Maha Laxmi Traders{% endblock %}
-{% block content %}
 
+{% block content %}
 <div class="section-title">
   <div>
     <h2>All Products</h2>
-    <p>Search items and open details</p>
+    <p>Browse products brand-wise</p>
   </div>
 </div>
 
 <form class="searchbar" method="get" action="{% url 'product_list' %}">
-  <input type="text" name="q" value="{{ q }}" placeholder="Search… (example: cello, doms, notebook, blue pen)" />
+  <input type="text" name="q" value="{{ q }}" placeholder="Search products…" />
   <button type="submit">Search</button>
   {% if q %}
     <a class="pill" href="{% url 'product_list' %}">Clear</a>
@@ -25,6 +26,8 @@
       <div class="imgbox">
         {% if p.image %}
           <img src="{{ p.image.url }}" alt="{{ p.name }}">
+        {% else %}
+          <img src="{% static 'img/placeholder.png' %}" alt="{{ p.name }}">
         {% endif %}
       </div>
 
@@ -33,7 +36,9 @@
 
       <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
         <div class="price">₹{{ p.price }}</div>
-        {% if p.stock_quantity <= 5 %}
+        {% if p.stock_quantity <= 0 %}
+          <span class="stock"><span class="dot low"></span>Out of stock</span>
+        {% elif p.stock_quantity <= 5 %}
           <span class="stock"><span class="dot low"></span>Low: {{ p.stock_quantity }}</span>
         {% else %}
           <span class="stock"><span class="dot"></span>In stock: {{ p.stock_quantity }}</span>
@@ -47,5 +52,4 @@
     </div>
   {% endfor %}
 </div>
-
 {% endblock %}
