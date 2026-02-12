@@ -1,55 +1,74 @@
-{% extends "core/base.html" %}
 {% load static %}
-{% block title %}Products • Sri Maha Laxmi Traders{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products</title>
 
-{% block content %}
-<div class="section-title">
-  <div>
-    <h2>All Products</h2>
-    <p>Browse products brand-wise</p>
-  </div>
-</div>
+  <!-- Your existing CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
 
-<form class="searchbar" method="get" action="{% url 'product_list' %}">
-  <input type="text" name="q" value="{{ q }}" placeholder="Search products…" />
-  <button type="submit">Search</button>
-  {% if q %}
-    <a class="pill" href="{% url 'product_list' %}">Clear</a>
-  {% endif %}
-</form>
+  <div class="container">
+    <h1>All Products</h1>
 
-<div style="height:12px;"></div>
+    <!-- Search Form (optional) -->
+    <form method="get" action="" class="search-bar">
+      <input
+        type="text"
+        name="q"
+        placeholder="Search... (example: cello, doms, notebook, blue pen)"
+        value="{{ request.GET.q|default:'' }}"
+      />
+      <button type="submit">Search</button>
+    </form>
 
-<div class="grid">
-  {% for p in products %}
-    <a class="card item" href="{% url 'product_detail' p.id %}">
-      <div class="imgbox">
-        {% if p.image %}
-          <img src="{{ p.image.url }}" alt="{{ p.name }}">
-        {% else %}
-          <img src="{% static 'img/placeholder.png' %}" alt="{{ p.name }}">
-        {% endif %}
-      </div>
+    <!-- Products Grid -->
+    <div class="products-grid">
+      {% for p in products %}
+        <div class="product-card">
 
-      <h3>{{ p.name }}</h3>
-      <div class="muted">{{ p.brand.name }} • {{ p.category.name }}</div>
+          <!-- ✅ IMAGE -->
+          <div class="product-image">
+            {% if p.image %}
+              <img src="{{ p.image.url }}" alt="{{ p.name }}">
+            {% else %}
+              <img src="{% static 'img/placeholder.png' %}" alt="No image">
+            {% endif %}
+          </div>
 
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-        <div class="price">₹{{ p.price }}</div>
-        {% if p.stock_quantity <= 0 %}
-          <span class="stock"><span class="dot low"></span>Out of stock</span>
-        {% elif p.stock_quantity <= 5 %}
-          <span class="stock"><span class="dot low"></span>Low: {{ p.stock_quantity }}</span>
-        {% else %}
-          <span class="stock"><span class="dot"></span>In stock: {{ p.stock_quantity }}</span>
-        {% endif %}
-      </div>
-    </a>
-  {% empty %}
-    <div class="card item">
-      <h3>No products found</h3>
-      <p class="muted">Try a different keyword.</p>
+          <!-- DETAILS -->
+          <div class="product-details">
+            <h3 class="product-title">{{ p.name }}</h3>
+
+            <p class="product-meta">
+              {{ p.brand.name }} • {{ p.category.name }}
+            </p>
+
+            <p class="product-price">₹{{ p.price }}</p>
+
+            <!-- STOCK -->
+            {% if p.stock_quantity > 0 %}
+              <span class="stock-badge in-stock">In stock: {{ p.stock_quantity }}</span>
+            {% else %}
+              <span class="stock-badge out-stock">Out of stock</span>
+            {% endif %}
+
+            <!-- Optional: details link -->
+            <div class="product-actions">
+              <a class="btn" href="{% url 'product_detail' p.id %}">View</a>
+            </div>
+          </div>
+
+        </div>
+      {% empty %}
+        <p>No products found.</p>
+      {% endfor %}
     </div>
-  {% endfor %}
-</div>
-{% endblock %}
+
+  </div>
+
+</body>
+</html>
