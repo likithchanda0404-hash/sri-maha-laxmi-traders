@@ -1,52 +1,42 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 
 class Brand(models.Model):
-    name = models.CharField(max_length=100, unique=True)          # e.g., Doms
-    name_te = models.CharField(max_length=120, blank=True)        # e.g., డామ్స్ (optional)
+    name = models.CharField(max_length=100, unique=True)
     is_active = models.BooleanField(default=True)
-
-    class Meta:
-        ordering = ["name"]
 
     def __str__(self):
         return self.name
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)          # e.g., Pens
-    name_te = models.CharField(max_length=120, blank=True)        # e.g., పెన్లు (optional)
+    name = models.CharField(max_length=100, unique=True)
     is_active = models.BooleanField(default=True)
-
-    class Meta:
-        ordering = ["name"]
-        verbose_name_plural = "Categories"
 
     def __str__(self):
         return self.name
 
 
 class Product(models.Model):
-    brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name="products")
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name="products")
+    brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
 
-    name = models.CharField(max_length=200)                       # English name
-    name_te = models.CharField(max_length=220, blank=True)         # Telugu name
+    name = models.CharField(max_length=200)
+    name_te = models.CharField(max_length=200, blank=True, null=True)
 
-    description = models.TextField(blank=True)                     # English
-    description_te = models.TextField(blank=True)                  # Telugu
+    description = models.TextField(blank=True)
+    description_te = models.TextField(blank=True, null=True)
 
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock_quantity = models.PositiveIntegerField(default=0)
 
-    image = models.ImageField(upload_to="products/", blank=True, null=True)  # main image
-    is_active = models.BooleanField(default=True)
+    # ✅ Cloudinary field
+    image = CloudinaryField("image", blank=True, null=True)
 
+    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        ordering = ["name"]
-
     def __str__(self):
-        return f"{self.name} ({self.brand.name})"
+        return self.name
