@@ -13,5 +13,5 @@ urlpatterns = [
     path("", include("orders.urls")),
 ]
 
-# ✅ Serve media in production too (for Render demo)
+# ✅ Serve MEDIA in production too (needed on Render for images)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
