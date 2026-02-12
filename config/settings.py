@@ -109,11 +109,8 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # ✅ Optional but recommended (better caching for static files)
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    }
-}
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
 
 # Media (your product images)
 MEDIA_URL = "/media/"
