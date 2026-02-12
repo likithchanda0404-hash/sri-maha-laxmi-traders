@@ -1,74 +1,51 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Products</title>
-
-  <!-- Your existing CSS -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
-  <div class="container">
-    <h1>All Products</h1>
+<h2>All Products</h2>
 
-    <!-- Search Form (optional) -->
-    <form method="get" action="" class="search-bar">
-      <input
-        type="text"
-        name="q"
-        placeholder="Search... (example: cello, doms, notebook, blue pen)"
-        value="{{ request.GET.q|default:'' }}"
-      />
-      <button type="submit">Search</button>
-    </form>
+<form method="get">
+  <input type="text" name="q" placeholder="Search..." value="{{ request.GET.q }}">
+  <button type="submit">Search</button>
+</form>
 
-    <!-- Products Grid -->
-    <div class="products-grid">
-      {% for p in products %}
-        <div class="product-card">
+<hr>
 
-          <!-- ✅ IMAGE -->
-          <div class="product-image">
-            {% if p.image %}
-              <img src="{{ p.image.url }}" alt="{{ p.name }}">
-            {% else %}
-              <img src="{% static 'img/placeholder.png' %}" alt="No image">
-            {% endif %}
-          </div>
+<div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
+  {% for p in products %}
+    <div style="border:1px solid #eee; padding:12px; border-radius:10px;">
+      <div style="height:220px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+        {% if p.image %}
+          <img src="{{ p.image.url }}" alt="{{ p.name }}" style="max-width:100%; max-height:100%;">
+        {% else %}
+          <img src="{% static 'img/placeholder.svg' %}" alt="No image" style="max-width:100%; max-height:100%;">
+        {% endif %}
+      </div>
 
-          <!-- DETAILS -->
-          <div class="product-details">
-            <h3 class="product-title">{{ p.name }}</h3>
+      <h3 style="margin:10px 0 4px;">{{ p.name }}</h3>
+      <div>{{ p.brand.name }} • {{ p.category.name }}</div>
+      <div style="margin-top:8px;"><b>₹{{ p.price }}</b></div>
 
-            <p class="product-meta">
-              {{ p.brand.name }} • {{ p.category.name }}
-            </p>
+      <div style="margin-top:8px;">
+        {% if p.stock_quantity|default:0 > 0 %}
+          In stock: {{ p.stock_quantity }}
+        {% else %}
+          Out of stock
+        {% endif %}
+      </div>
 
-            <p class="product-price">₹{{ p.price }}</p>
-
-            <!-- STOCK -->
-            {% if p.stock_quantity > 0 %}
-              <span class="stock-badge in-stock">In stock: {{ p.stock_quantity }}</span>
-            {% else %}
-              <span class="stock-badge out-stock">Out of stock</span>
-            {% endif %}
-
-            <!-- Optional: details link -->
-            <div class="product-actions">
-              <a class="btn" href="{% url 'product_detail' p.id %}">View</a>
-            </div>
-          </div>
-
-        </div>
-      {% empty %}
-        <p>No products found.</p>
-      {% endfor %}
+      <div style="margin-top:10px;">
+        <a href="{% url 'product_detail' p.id %}">View</a>
+      </div>
     </div>
-
-  </div>
+  {% empty %}
+    <p>No products found.</p>
+  {% endfor %}
+</div>
 
 </body>
 </html>

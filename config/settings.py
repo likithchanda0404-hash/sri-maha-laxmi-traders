@@ -3,24 +3,17 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# -------------------------------------------------
-# SECURITY
-# -------------------------------------------------
-SECRET_KEY = os.environ.get("SECRET_KEY", "change-this-in-render")
-DEBUG = os.environ.get("DEBUG", "0") == "1"
+# -------------------------
+# Core settings
+# -------------------------
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key-change-me")
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    ".onrender.com",
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".onrender.com"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
 ]
 
-# If you already set your custom domain, add it here too
-# ALLOWED_HOSTS += ["yourdomain.com", "www.yourdomain.com"]
-
-# -------------------------------------------------
-# APPS
-# -------------------------------------------------
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -29,23 +22,23 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    # your apps
+    # Your apps
     "core",
-    "accounts",
     "catalog",
     "orders",
+    "accounts",
 
-    # cloudinary apps
+    # Cloudinary (media storage)
     "cloudinary",
     "cloudinary_storage",
 ]
 
-# -------------------------------------------------
-# MIDDLEWARE
-# -------------------------------------------------
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # ✅ required
+
+    # WhiteNoise (static files)
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -56,13 +49,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "config.urls"
 
-# -------------------------------------------------
-# TEMPLATES
-# -------------------------------------------------
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  # ok even if folder not exist
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -77,9 +67,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-# -------------------------------------------------
-# DATABASE (SQLite default — good for now)
-# -------------------------------------------------
+# -------------------------
+# Database (SQLite is OK for demo)
+# -------------------------
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -87,9 +77,6 @@ DATABASES = {
     }
 }
 
-# -------------------------------------------------
-# PASSWORD VALIDATORS
-# -------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -97,43 +84,38 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# -------------------------------------------------
-# LANGUAGE / TIME
-# -------------------------------------------------
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# -------------------------------------------------
-# STATIC + MEDIA (Cloudinary for MEDIA)
-# -------------------------------------------------
+# -------------------------
+# Static files (CSS/JS)
+# -------------------------
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# ✅ This is the correct modern way for Django 4+ / 5+ / 6+
+# WhiteNoise storage (works on Render)
 STORAGES = {
-    # MEDIA -> Cloudinary
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
-    # STATIC -> WhiteNoise
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
 
-# ✅ Cloudinary reads this env var (must start with cloudinary://)
-CLOUDINARY_STORAGE = {
-    "CLOUDINARY_URL": os.environ.get("CLOUDINARY_URL", "")
-}
+# -------------------------
+# Media files (Images)
+# -------------------------
+# Cloudinary uses CLOUDINARY_URL env var automatically.
+# This is just a fallback for local.
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
-# -------------------------------------------------
-# SECURITY for Render (optional but recommended)
-# -------------------------------------------------
-CSRF_TRUSTED_ORIGINS = [
-    "https://*.onrender.com",
-]
+# -------------------------
+# Security on Render
+# -------------------------
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# -------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
