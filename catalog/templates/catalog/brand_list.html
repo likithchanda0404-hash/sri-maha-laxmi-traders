@@ -11,7 +11,7 @@
 
 <div class="grid">
   {% for b in brands %}
-    <a class="card item" href="/brand/{{ b.id }}/">
+    <a class="card item" href="{% url 'products_by_brand' b.id %}">
       <h3>{{ b.name }}</h3>
       {% if b.name_te %}
         <p class="muted">{{ b.name_te }}</p>
