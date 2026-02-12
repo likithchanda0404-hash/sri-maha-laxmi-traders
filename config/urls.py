@@ -6,15 +6,12 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
 
-    # ADD THIS LINE 👇
     path("accounts/", include("accounts.urls")),
 
     path("", include("core.urls")),
     path("", include("catalog.urls")),
     path("", include("orders.urls")),
-
 ]
 
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# ✅ Serve media in production too (for Render demo)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
