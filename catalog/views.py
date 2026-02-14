@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.db.models import Q
-from .models import Product, Brand
+from .models import Product
 
 
 def product_list(request):
@@ -8,7 +8,7 @@ def product_list(request):
 
     products = Product.objects.all()
 
-    # safe filter if your Product has is_active
+    # If your Product model has is_active, filter safely
     if hasattr(Product, "is_active"):
         products = products.filter(is_active=True)
 
@@ -23,33 +23,3 @@ def product_list(request):
         "products": products,
         "q": q,
     })
-
-
-def brand_list(request):
-    brands = Brand.objects.all()
-
-    if hasattr(Brand, "is_active"):
-        brands = brands.filter(is_active=True)
-
-    return render(request, "catalog/brand_list.html", {
-        "brands": brands
-    })
-
-
-def products_by_brand(request, brand_id):
-    brand = get_object_or_404(Brand, id=brand_id)
-
-    products = Product.objects.filter(brand=brand)
-
-    if hasattr(Product, "is_active"):
-        products = products.filter(is_active=True)
-
-    return render(request, "catalog/products_by_brand.html", {
-        "brand": brand,
-        "products": products,
-    })
-
-
-def product_detail(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    return render(request, "catalog/product_detail.html", {"product": product})
